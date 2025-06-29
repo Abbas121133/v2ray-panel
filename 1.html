@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>V2Ray VMess Generator</title>
+</head>
+<body>
+  <h2>V2Ray VMess Link Generator</h2>
+  <label>UUID: <input id="uuid" value=""/> </label><br>
+  <label>Server Address: <input id="address" value="your.server.com"/> </label><br>
+  <label>Port: <input id="port" value="443"/> </label><br>
+  <label>Path: <input id="path" value="/ws"/> </label><br>
+  <button onclick="generate()">Generate</button>
+
+  <p>Result:</p>
+  <textarea id="output" rows="6" cols="80"></textarea>
+
+  <script>
+    function generate() {
+      const uuid = document.getElementById("uuid").value;
+      const address = document.getElementById("address").value;
+      const port = document.getElementById("port").value;
+      const path = document.getElementById("path").value;
+
+      const config = {
+        v: "2",
+        ps: "My V2Ray",
+        add: address,
+        port: port,
+        id: uuid,
+        aid: "0",
+        net: "ws",
+        type: "none",
+        host: "",
+        path: path,
+        tls: "tls"
+      };
+
+      const base64 = btoa(unescape(encodeURIComponent(JSON.stringify(config))));
+      document.getElementById("output").value = "vmess://" + base64;
+    }
+  </script>
+</body>
+</html>
